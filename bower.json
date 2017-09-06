@@ -1,9 +1,9 @@
 {
-  "name": "ember-swarm-ui-frontend",
+  "name": "ember-swarm-ui-engine",
   "dependencies": {
     "materialize": "0.97.6"
   },
-  "homepage": "https://github.com/big-data-europe/ember-swarm-ui-frontend",
+  "homepage": "https://github.com/big-data-europe/ember-swarm-ui-engine",
   "authors": [
     "Nóra Szepes <nora.szepes@tenforce.com>"
   ],

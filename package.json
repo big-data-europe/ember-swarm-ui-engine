@@ -1,7 +1,7 @@
 {
-  "name": "ember-swarm-ui-frontend",
+  "name": "ember-swarm-ui-engine",
   "version": "1.0.0",
-  "description": "Small description for swarm-ui-frontend goes here",
+  "description": "Small description for swarm-ui-engine goes here",
   "license": "MIT",
   "author": "",
   "directories": {

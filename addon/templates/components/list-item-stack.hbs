@@ -1,0 +1,13 @@
+{{#md-collapsible icon=item title=item.title}}
+  {{#if editing}}
+    {{stack-manager model=item edit=(action 'edit')}}
+  {{else}}
+    <div class="row">
+      This stack uses the {{item.dockerFile.title}} docker file from the database. It has {{item.numberOfPipelines}} connected pipelines.
+    </div>
+    <div class="row actions">
+      {{md-btn text="edit" action="edit"}}
+      <div class="btn" {{action "launchPipeline" item}}>Launch</div>
+    </div>
+  {{/if}}
+{{/md-collapsible}}

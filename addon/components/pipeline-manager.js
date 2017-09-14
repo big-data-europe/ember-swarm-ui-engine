@@ -2,10 +2,10 @@ import Ember from 'ember';
 
 export default Ember.Component.extend({
   infoText: `
-    <strong>Pipelines</strong> & <strong>Services</strong> try to abstract the same behaviour as when working with the docker-compose commandline. A <em>Pipeline</em> 
-    ideally represents a docker-compose project, and each <em>Service</em> represents a set of containers executed within. Both Pipelines & Services have <em>statuses</em>. 
-    Statuses define the current point in the lifecycle of both. Some of those statuses are shared accross both concepts. When clicking on UP in a Pipeline, that will 
-    start both the pipeline & the services inside it. The same happens for STOP, or DOWN buttons. Services(containers) can also be started separately, without starting 
+    <strong>Pipelines</strong> & <strong>Services</strong> try to abstract the same behaviour as when working with the docker-compose commandline. A <em>Pipeline</em>
+    ideally represents a docker-compose project, and each <em>Service</em> represents a set of containers executed within. Both Pipelines & Services have <em>statuses</em>.
+    Statuses define the current point in the lifecycle of both. Some of those statuses are shared accross both concepts. When clicking on UP in a Pipeline, that will
+    start both the pipeline & the services inside it. The same happens for STOP, or DOWN buttons. Services(containers) can also be started separately, without starting
     the whole Pipeline.
 
     <br><br>
@@ -17,7 +17,7 @@ export default Ember.Component.extend({
         <li><strong>up:</strong> the same as started, the pipeline has finished starting. This state is reached when creating a new pipeline, or clicking UP from a stopped one.</li>
         <li><strong>stopping:</strong> the pipeline has been commanded to stop, either by clicking on <strong>STOP</strong> or <strong>DOWN</strong> buttons.</li>
         <li><strong>stopped:</strong> the pipeline is stopped. Volumes and containers are preserved.</li>
-        <li><strong>down:</strong> the pipeline is stopped, containers are destroyed and all volumes are removed.</li> 
+        <li><strong>down:</strong> the pipeline is stopped, containers are destroyed and all volumes are removed.</li>
       </ul>
 
     <br>
@@ -35,7 +35,7 @@ export default Ember.Component.extend({
   showDialog: false,
   statusUpdateService: Ember.inject.service('status-update'),
   isAdvancedMode: false,
-  
+
   // Updates the status of the pipeline.
   updateStatus: function(status) {
     const pipeline = this.get('pipeline');
@@ -67,6 +67,9 @@ export default Ember.Component.extend({
           this.get('pipeline').restart();
         }
       });
+    },
+    updatePipeline: function() {
+      return this.get('pipeline').update();
     },
     confirmDeletion: function() {
       return this.set("showDialog", true);

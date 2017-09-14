@@ -1,0 +1,10 @@
+{{#power-select
+  allowClear=false
+  options=dockerComposeList.lastSuccessful.value
+  search=(perform dockerComposeList)
+  selected=stackDockerFile
+  onchange=(action (mut stackDockerFile))
+  as |option|
+}}
+  {{option.title}}
+{{/power-select}}

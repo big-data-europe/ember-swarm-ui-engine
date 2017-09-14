@@ -41,7 +41,11 @@
   </div>
   <div class="delete">
     <div class="btn delete" {{action "confirmDeletion"}} title='delete forever'>
-      <i class="material-icons">delete_forever</i></div>
+      <i class="material-icons">delete_forever</i>
+    </div>
+  </div>
+  <div class="update">
+    {{md-btn text="update pipeline" action="updatePipeline"}}
   </div>
 
   {{!-- List of containers conforming the pipeline --}}

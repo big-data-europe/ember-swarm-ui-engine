@@ -1,10 +1,17 @@
-{{#md-navbar name='Swarm UI' homeRoute='index' }}
+{{!-- {{#md-navbar name='Swarm UI' homeRoute='index' }}
   {{#link-to 'repositories' tagName='li' }}
     Repositories
   {{/link-to}}
   {{#link-to 'pipelines' tagName='li' }}
     Pipelines
   {{/link-to}}
+{{/md-navbar}}
+
+{{outlet}} --}}
+
+{{#md-navbar name='Swarm UI' homeRoute='index' }}
+  {{link-to 'Repositories and Stacks' 'list' tagName='li' }}
+  {{link-to 'Pipelines' 'pipelines' tagName='li' }}
 {{/md-navbar}}
 
 {{outlet}}

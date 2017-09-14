@@ -1,0 +1,11 @@
+<div class= {{inputRequiredTitleCssClasses}}>
+  {{md-input label="Name of repository" value=repositoryTitle}}
+</div>
+
+{{smart-icon editing=true model=repositoryIcon}}
+
+<div class= {{inputRequiredLocationCssClasses}}>
+  {{md-input label="Git web URL for a repository with a docker-compose.yml file" value=repositoryLocation}}
+</div>
+{{md-btn text="Create" action="create"}}
+{{md-btn text="Clear" action="clear"}}

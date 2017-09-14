@@ -1,0 +1,35 @@
+<div class="item--list">
+  {{#md-card-collapsible}}
+
+    {{#each model.repositories as |item|}}
+      {{#if item.isRepository}}
+        {{list-item-repository item=item launchPipeline=(action launchPipeline)}}
+      {{/if}}
+    {{/each}}
+
+    {{#each model.stacks as |item|}}
+      {{#if item.isStack}}
+        {{list-item-stack item=item launchPipeline=(action launchPipeline)}}
+      {{/if}}
+    {{/each}}
+
+    {{#md-collapsible icon="add" title="Create new repository or stack" }}
+      <div class="create-selector">
+        <label class='type-label'>Type</label>
+        {{#md-radios
+            selection=isRepository}}
+            {{md-radio value=true name="Repository"}}
+            {{md-radio value=false name="Stack"}}
+        {{/md-radios}}
+      </div>
+      <div class="create">
+        {{#if isRepository}}
+          {{repository-creator}}
+        {{else}}
+          {{stack-creator}}
+        {{/if}}
+      </div>
+    {{/md-collapsible}}
+  {{/md-card-collapsible}}
+
+</div>

@@ -3,9 +3,9 @@ import Validations from 'ember-validations';
 
 export default Ember.Component.extend(Validations, {
   store: Ember.inject.service('store'),
-  statusUpdateService: Ember.inject.service('status-update'),
   repositoryIcon: Ember.Object.create(),
-  editing: false,
+  repositoryTitle: null,
+  repositoryLocation: null,
 
   validations: {
     'repositoryTitle': {
@@ -15,9 +15,6 @@ export default Ember.Component.extend(Validations, {
       presence: true
     }
   },
-  inputRequiredTitleCssClasses: "",
-  inputRequiredLocationCssClasses: "",
-
   isInputEmpty: function(inputFieldErrors, cssClasses) {
     if (this.get(inputFieldErrors).length > 0) {
       this.set(cssClasses, 'input-required');
@@ -27,18 +24,8 @@ export default Ember.Component.extend(Validations, {
     return false;
   },
 
-
-  launchPipeline: function(repository) {
-    this.get('statusUpdateService').getRequestedStatus('down').then((status) => {
-      let newPipeline = this.get('store').createRecord('pipeline-instance', {
-        repository: repository,
-        title: repository.get('title'),
-        icon: repository.get('icon'),
-        status: status
-      });
-      newPipeline.save();
-    });
-  },
+  inputRequiredTitleCssClasses: "",
+  inputRequiredLocationCssClasses: "",
 
   actions: {
     create: function() {
@@ -55,27 +42,19 @@ export default Ember.Component.extend(Validations, {
         title: this.get('repositoryTitle'),
         icon: this.get('repositoryIcon.icon'),
       });
-      repository.save().then((function(_this) {
-        return function() {
-          _this.set('repositoryLocation', '');
-          _this.set('repositoryTitle', '');
-          return _this.set('repositoryIcon', Ember.Object.create());
-        };
-      })(this));
+      repository.save().then(() => {
+        this.set('repositoryLocation', '');
+        this.set('repositoryTitle', '');
+        return this.set('repositoryIcon', Ember.Object.create());
+      });
     },
     clear: function() {
       this.set('repositoryLocation', "");
       this.set('repositoryTitle', "");
+      this.set('inputRequiredTitleCssClasses', "");
+      this.set('inputRequiredLocationCssClasses', "");
       this.set('repositoryIcon.icon', "");
       return false;
     },
-    edit: function() {
-      this.toggleProperty('editing');
-      return false;
-    },
-    launchPipeline: function(repository) {
-      this.launchPipeline(repository);
-      return false;
-    }
   }
 });

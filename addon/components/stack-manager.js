@@ -1,23 +1,22 @@
 import Ember from 'ember';
 import Validations from 'ember-validations';
 
+
 export default Ember.Component.extend(Validations, {
   showDialog: false,
   title: Ember.computed.alias('model.title'),
-  location: Ember.computed.alias('model.loaction'),
+  newDockerFile: Ember.computed.oneWay('model.dockerFile'),
 
   validations: {
     'model.title': {
       presence: true,
       length: { minimum: 1 }
     },
-    'model.location': {
-      presence: true,
-      length: { minimum: 1 }
+    'model.dockerFile': {
+      presence: true
     }
   },
   inputRequiredTitleCssClasses: "",
-  inputRequiredLocationCssClasses: "",
 
   isInputEmpty: function(inputFieldErrors, cssClasses) {
     if (this.get(inputFieldErrors) && (this.get(inputFieldErrors).length > 0)) {
@@ -32,13 +31,13 @@ export default Ember.Component.extend(Validations, {
     save: function() {
       //we need to do it like this
       // if i would call it in the if statement, only one would be red at the end
-
-      var isTitleEmpty = this.isInputEmpty('errors.model.title', 'inputRequiredTitleCssClasses');
-      var isLocationEmpty = this.isInputEmpty('errors.model.location', 'inputRequiredLocationCssClasses');
-      if (isTitleEmpty || isLocationEmpty) {
+      let isTitleEmpty = this.isInputEmpty('errors.model.title', 'inputRequiredTitleCssClasses');
+      let isDockerFileEmpty = this.isInputEmpty('errors.newDockerFile', 'inputRequiredDockerFileCssClasses');
+      if (isTitleEmpty || isDockerFileEmpty) {
         return;
       }
 
+      this.set('model.dockerFile', this.get('newDockerFile'));
       this.get('model').save().then((function(_this) {
         return function() {
           return _this.sendAction("edit");

@@ -29,10 +29,11 @@
 
     {{!-- Toggle advanced mode button  --}}
     <label>
-      {{input type="checkbox"
+      {{md-check name="Toggle Advanced Mode" checked=isAdvancedMode}}
+      {{!-- {{input type="checkbox"
         name="checkboxPolicy"
         checked=isAdvancedMode}}
-        Toggle Advanced Mode
+        Toggle Advanced Mode --}}
     </label>
 
     {{#if pipeline.actionCount}}

@@ -3,18 +3,17 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   statusUpdateService: Ember.inject.service('status-update'),
   showLogs: false,
-  disableScalingButton: false,
-  disableDownButton: true,
+  disableServiceActionButtons: false,
 
   // Disable scaling works for controlling scaling and restarting
   disableScaling: Ember.observer('service.status', function() {
     this.get('service.status').then((serviceStatus) => {
       if (serviceStatus === null) {
-        return this.set('disableScalingButton', true);
+        return this.set('disableServiceActionButtons', true);
       }
       else {
         if (serviceStatus.get('title') !== 'started' && serviceStatus.get('title') !== 'up') {
-          return this.set('disableScalingButton', true);
+          return this.set('disableServiceActionButtons', true);
         }
       }
     });
@@ -37,13 +36,13 @@ export default Ember.Component.extend({
       return this.updateServiceStatus('stopped');
     },
     pipelineServiceRestart() {
-      if (!this.get('disableScalingButton')) {
+      if (!this.get('disableServiceActionButtons')) {
         let service = this.get('service');
         return service.restart();
       }
     },
     decreaseServiceScaling: function() {
-      if (!this.get('disableScalingButton')) {
+      if (!this.get('disableServiceActionButtons')) {
         let service = this.get('service');
         let scaling = service.get('scaling');
         if (scaling > 0) {
@@ -53,7 +52,7 @@ export default Ember.Component.extend({
       }
     },
     increaseServiceScaling: function() {
-      if (!this.get('disableScalingButton')) {
+      if (!this.get('disableServiceActionButtons')) {
         let service = this.get('service');
         let scaling = service.get('scaling');
         service.set('scaling', scaling + 1);
@@ -61,7 +60,7 @@ export default Ember.Component.extend({
       }
     },
     toggleLogs: function() {
-      if (!this.get('disableScalingButton')) {
+      if (!this.get('disableServiceActionButtons')) {
         let service = this.get('service');
         service.toggleProperty("showLogs");
         if (service.showLogs) {

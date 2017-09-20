@@ -6,9 +6,9 @@
 
     {{!-- Scaling buttons --}}
     <div class="col s1 line-input scaling">
-      {{md-btn class="btn secondary" action='decreaseServiceScaling' isDisabled=disableScalingButton text=" - "}}
+      {{md-btn class="btn secondary" action='decreaseServiceScaling' isDisabled=disableServiceActionButtons text=" - "}}
       {{service.scaling}}
-      {{md-btn class="btn secondary" action='increaseServiceScaling' isDisabled=disableScalingButton text=" + "}}
+      {{md-btn class="btn secondary" action='increaseServiceScaling' isDisabled=disableServiceActionButtons text=" + "}}
     </div>
 
     {{!-- Single container action buttons --}}
@@ -34,13 +34,13 @@
       {{#if service.restarting}}
         Restarting...
       {{else}}
-        {{md-btn class="btn secondary" action='pipelineServiceRestart' isDisabled=disableScalingButton text="restart"}}
+        {{md-btn class="btn secondary" action='pipelineServiceRestart' isDisabled=disableServiceActionButtons text="restart"}}
       {{/if}}
     </div>
 
     {{!-- Log toggle --}}
     <div class="col s1 line-input log">
-        <div class="btn secondary" {{action "toggleLogs"}}><i class="material-icons">bug_report</i></div>
+        <div class="btn secondary {{if disableServiceActionButtons 'disabled'}}"><i class="material-icons">bug_report</i></div>
     </div>
 
   </div>

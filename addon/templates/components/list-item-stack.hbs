@@ -2,11 +2,30 @@
   {{#if editing}}
     {{stack-manager model=item edit=(action 'edit')}}
   {{else}}
+
     <div class="row">
-      This stack uses the {{item.dockerFile.title}} docker file from the database. It has {{item.numberOfPipelines}} connected pipelines.
+
+      {{#if item.dockerFile}}
+
+        <div class="text">
+          This stack uses the <span>{{item.dockerFile.title}}</span> docker file from the database.
+        </div>
+      {{/if}}
+      {{#if item.location}}
+
+        <div class="text">
+          The original stack is located at <a href= {{item.location}} target="_blank">{{item.location}}</a>.
+        </div>
+      {{/if}}
+
+      <div class="text">
+        It has {{item.numberOfPipelines}} connected pipelines.
+      </div>
     </div>
+
     <div class="row actions">
       {{md-btn text="edit" action="edit"}}
+
       <div class="btn" {{action "launchPipeline" item}}>Launch</div>
     </div>
   {{/if}}

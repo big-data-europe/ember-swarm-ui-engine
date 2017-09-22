@@ -5,13 +5,13 @@
         {{list-item-stack item=item launchPipeline=(action launchPipeline)}}
     {{/each}}
 
-    {{#md-collapsible icon="add" title="Create new repository or stack" }}
+    {{#md-collapsible icon="add" title="Create new a stack" }}
       <div class="create-selector">
         <label class='type-label'>Type</label>
         {{#md-radios
             selection=createFromLocation}}
-            {{md-radio value=true name="Repository"}}
-            {{md-radio value=false name="Stack"}}
+            {{md-radio value=true name="with repository location"}}
+            {{md-radio value=false name="with docker-compose file from the db"}}
         {{/md-radios}}
       </div>
       <div class="create">

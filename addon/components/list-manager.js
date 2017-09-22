@@ -7,20 +7,15 @@ export default Ember.Component.extend({
 
   editing: false,
 
-  isRepository: true,
+  createFromLocation: true,
 
   launchPipeline: function(item) {
     var pipeline = {
       title: item.get('title'),
       icon: item.get('icon'),
-      status: status
+      status: status,
+      stack: item
     };
-
-    if (item.isRepository) {
-      pipeline.repository = item;
-    } else if (item.isStack) {
-      pipeline.stack = item;
-    }
 
     this.get('statusUpdateService').getRequestedStatus('down').then((status) => {
       pipeline.status = status;

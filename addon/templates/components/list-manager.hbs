@@ -2,7 +2,7 @@
   {{#md-card-collapsible}}
 
     {{#each model as |item|}}
-        {{list-item-stack item=item launchPipeline=(action launchPipeline)}}
+        {{list-item-stack item=item launchPipeline=(action launchPipeline) activeItem=activeItem}}
     {{/each}}
 
     {{#md-collapsible icon="add" title="Create new a stack" }}

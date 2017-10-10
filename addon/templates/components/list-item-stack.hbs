@@ -1,4 +1,4 @@
-{{#md-collapsible icon=item title=item.title}}
+{{#md-collapsible icon=item title=item.title active=(eq item.id activeItem)}}
   {{#if editing}}
     {{stack-manager model=item edit=(action 'edit')}}
   {{else}}
@@ -27,7 +27,7 @@
       {{md-btn text="edit" action="edit"}}
 
       <div class="btn" {{action "launchPipeline" item}}>Launch</div>
-      {{link-to-external "Edit docker compose file" 'stack' item.dockerFile.id class='btn'}} 
+      {{link-to-external "Edit docker compose file" 'stack' item.dockerFile.id class='btn'}}
     </div>
   {{/if}}
 {{/md-collapsible}}

@@ -5,7 +5,16 @@
   {{smart-icon model=model editing=true}}
 
   <div>
-    {{md-input label="Git web URL for a repository with a docker-compose.yml file" value=model.location}}
+    {{#unless model.dockerFile}}
+      {{md-input label="Git web URL for a repository with a docker-compose.yml file" value=model.location}}
+      {{else}}
+        <div class='location'>
+          <label>Location</label>
+          <div class="text">
+            The original stack is located at <a href= {{model.location}} target="_blank">{{model.location}}</a>.
+          </div>
+        </div>
+    {{/unless}}
   </div>
 
   <div class='docker-search'>

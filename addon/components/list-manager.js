@@ -24,6 +24,7 @@ export default Ember.Component.extend({
       let newPipeline = this.get('store').createRecord('pipeline-instance', pipeline);
       newPipeline.save();
     });
+    this.sendAction('goToPipelines');
   },
 
   actions: {

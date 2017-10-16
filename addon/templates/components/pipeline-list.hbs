@@ -2,7 +2,7 @@
   <div class="pipeline--list">
     {{#md-card-collapsible}}
       {{#each model as |pipeline|}}
-        {{#md-collapsible icon=pipeline title=pipeline.title}}
+        {{#md-collapsible icon=pipeline title=pipeline.title active=(eq pipeline.id activeItem)}}
           {{#if editable}}
             {{pipeline-manager pipeline=pipeline}}
           {{else}}

@@ -5,8 +5,8 @@ export default Ember.Controller.extend({
   relatedStack: "",
 
   actions: {
-    goToPipelines: function() {
-      this.transitionToRoute('pipelines');
+    goToPipelines: function(pipelineId) {
+      this.transitionToRoute('pipelines', { queryParams: { latestPipeline: pipelineId }});
       return false;
     }
   }

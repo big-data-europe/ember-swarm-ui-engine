@@ -22,9 +22,11 @@ export default Ember.Component.extend({
     this.get('statusUpdateService').getRequestedStatus('down').then((status) => {
       pipeline.status = status;
       let newPipeline = this.get('store').createRecord('pipeline-instance', pipeline);
-      newPipeline.save();
+      newPipeline.save().then((newPip) => {
+        this.sendAction('goToPipelines', newPip.get('id'));
+      });
     });
-    this.sendAction('goToPipelines');
+
   },
 
   actions: {

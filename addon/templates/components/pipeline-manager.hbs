@@ -45,9 +45,11 @@
       <i class="material-icons">delete_forever</i>
     </div>
   </div>
-  <div class="update" title="update pipeline details and status">
-    {{md-btn text="update pipeline" action="updatePipeline" }}
-  </div>
+  {{#if pipeline.stack.location}}
+    <div class="update" title="update from git and repull all images">
+      {{md-btn text="update from git" action="updatePipeline" }}
+    </div>
+  {{/if}}
 
   {{!-- List of containers conforming the pipeline --}}
   <div class="services">

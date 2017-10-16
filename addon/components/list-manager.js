@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import moment from 'moment';
 
 
 export default Ember.Component.extend({
@@ -10,8 +11,9 @@ export default Ember.Component.extend({
   createFromLocation: true,
 
   launchPipeline: function(item) {
+    var dateNow = moment().format(' YYYY.MM.DD HH:mm:ss');
     var pipeline = {
-      title: item.get('title'),
+      title: item.get('title') + dateNow,
       icon: item.get('icon'),
       status: status,
       stack: item

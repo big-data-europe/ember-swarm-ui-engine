@@ -26,7 +26,7 @@
     <div class="row actions">
       {{md-btn text="edit" action="edit"}}
 
-      <div class="btn" {{action "launchPipeline" item}}>Launch</div>
+      <div class="btn" {{action "launchPipeline" item}}>Launch new pipeline</div>
       {{link-to-external "Edit docker compose file" 'stack' item.dockerFile.id class='btn'}}
     </div>
   {{/if}}

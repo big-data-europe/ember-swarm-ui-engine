@@ -1,10 +1,13 @@
 {{#if model}}
   <div class="pipeline--list">
+    {{#if lastClicked}}
+    <p>Last slide clicked: <span class="selected-action">{{lastClicked}}</span></p>
+    {{/if}}
     {{#md-card-collapsible}}
       {{#each model as |pipeline|}}
-        {{#md-collapsible icon=pipeline title=pipeline.title active=(eq pipeline.id activeItem)}}
+        {{#md-collapsible icon=pipeline title=pipeline.title active=(eq pipeline.id activeItem) actionArg=pipeline.id action="choosePipeline"}}
           {{#if editable}}
-            {{pipeline-manager pipeline=pipeline}}
+            {{pipeline-manager pipeline=pipeline activePipeline=(eq lastClicked pipeline.id)}}
           {{else}}
             {{pipeline-list-item pipeline=pipeline}}
           {{/if}}

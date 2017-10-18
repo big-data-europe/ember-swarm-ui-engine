@@ -55,7 +55,7 @@
   <div class="services">
     <h4>Services</h4>
     {{#each pipeline.services as |service|}}
-      {{pipeline-service service=service advancedMode=isAdvancedMode}}
+      {{pipeline-service service=service advancedMode=isAdvancedMode isActive=isActive}}
     {{/each}}
   </div>
 </div>

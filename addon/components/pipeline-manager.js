@@ -34,13 +34,24 @@ export default Ember.Component.extend({
   `,
   showDialog: false,
   statusUpdateService: Ember.inject.service('status-update'),
+  pollService: Ember.inject.service('poll-service'),
   isAdvancedMode: false,
+  isActiveObserver: Ember.observer('isActive', function(){
+    const isActive = this.get('isActive');
+    if (isActive) {
+      const pipeline = this.get('pipeline');
+      const randomTimeout = Math.floor(Math.random() * 8000) + 6000;
+      let pollPipeline = this.get('pollService').pollPipeline(randomTimeout)
+      pollPipeline(pipeline);
+    }
+  }).on('init'),
 
   // Updates the status of the pipeline.
   updateStatus: function(status) {
     const pipeline = this.get('pipeline');
     return this.get('statusUpdateService').updateStatus(pipeline, status);
   },
+
 
   actions: {
     showInfoDialog: function() {

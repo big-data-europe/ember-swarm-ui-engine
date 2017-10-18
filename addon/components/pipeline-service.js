@@ -4,6 +4,16 @@ export default Ember.Component.extend({
   statusUpdateService: Ember.inject.service('status-update'),
   showLogs: false,
   disableServiceActionButtons: false,
+  pollService: Ember.inject.service('poll-service'),
+  isActiveObserver: Ember.observer('isActive', function(){
+    const isActive = this.get('isActive');
+    if (isActive) {
+      const service = this.get('service');
+      const randomTimeout = Math.floor(Math.random() * 7000) + 6000;
+      let pollService = this.get('pollService').pollService(randomTimeout);
+      pollService(service);
+    }
+  }).on('init'),
 
   // Disable scaling works for controlling scaling and restarting
   disableScaling: Ember.observer('service.status', function() {

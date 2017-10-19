@@ -6,6 +6,11 @@ export default Ember.Route.extend({
       refreshModel: true
     }
   },
+  pollService: Ember.inject.service('poll-service'),  
+
+  activate() {
+    this.get('pollService').activatePoll();
+  },
   store: Ember.inject.service('store'),
   model: function() {
     return this.get('store').findAll('pipeline-instance');
@@ -13,7 +18,8 @@ export default Ember.Route.extend({
   resetController(controller, isExiting, transition) {
     if (isExiting) {
       // isExiting would be false if only the route's model was changing
-      controller.set('latestPipeline', '');
+      controller.set('latestPipeline', null);
+      this.get('pollService').deActivatePoll();
     }
   }
 });

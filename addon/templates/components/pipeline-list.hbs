@@ -7,7 +7,7 @@
       {{#each model as |pipeline|}}
         {{#md-collapsible icon=pipeline title=pipeline.title active=(eq pipeline.id activeItem) actionArg=pipeline.id action="choosePipeline"}}
           {{#if editable}}
-            {{pipeline-manager pipeline=pipeline isActive=(eq lastClicked pipeline.id)}}
+            {{pipeline-manager pipeline=pipeline isActive=(or (eq pipeline.id activeItem) (eq pipeline.id lastClicked))}}
           {{else}}
             {{pipeline-list-item pipeline=pipeline}}
           {{/if}}

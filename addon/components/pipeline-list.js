@@ -15,6 +15,7 @@ export default Ember.Component.extend({
       this.toggleProperty('editable');
     },
     choosePipeline: function(pipelineId) {
+      this.set('activeItem', null);
       if (this.get('lastClicked') === pipelineId) {
         this.set('lastClicked', null);
         return false;

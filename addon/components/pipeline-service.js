@@ -9,9 +9,8 @@ export default Ember.Component.extend({
     const isActive = this.get('isActive');
     if (isActive) {
       const service = this.get('service');
-      const randomTimeout = Math.floor(Math.random() * 7000) + 6000;
-      let pollService = this.get('pollService').pollService(randomTimeout);
-      pollService(service);
+      const randomTimeout = Math.floor(Math.random() * 5000) + 4000;
+      return this.get('pollService').pollService(service, randomTimeout);
     }
   }).on('init'),
 

@@ -16,14 +16,13 @@ export default Ember.Component.extend({
 
   // Disable scaling works for controlling scaling and restarting
   disableScaling: Ember.observer('service.status', function() {
+    let enableScalingStates = ['started', 'up'];
     this.get('service.status').then((serviceStatus) => {
-      if (serviceStatus === null) {
+      if (serviceStatus === null || enableScalingStates.indexOf(serviceStatus.get('title')) === -1) {
         return this.set('disableServiceActionButtons', true);
       }
       else {
-        if (serviceStatus.get('title') !== 'started' && serviceStatus.get('title') !== 'up') {
-          return this.set('disableServiceActionButtons', true);
-        }
+        return this.set('disableServiceActionButtons', false);
       }
     });
   }).on('init'),

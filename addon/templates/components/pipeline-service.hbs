@@ -43,9 +43,11 @@
         <div class="btn secondary {{if disableServiceActionButtons 'disabled'}}"><i class="material-icons">bug_report</i></div>
     </div>
 
-    <label>
-      {{md-check id=(concat "modal-" service.name "-stats") name="Stats" checked=getServiceStats}}
-    </label>
+    <div class="col s1 line-input">
+      <label>
+        {{md-check id=(concat "modal-" service.name "-stats") checked=getServiceStats}}
+      </label>
+    </div>
 
     {{#if cpuServiceStats}}
       {{#tether-dialog

@@ -2,14 +2,11 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
     observedServices: Ember.A(),
+    callQueue: Ember.A(),
     pollStatsSemaphore: true,
     observedServicesObserver: Ember.observer('observedServices.[]', function() {
-        let observedServices = this.get('observedServices');
-        let timer = this.pollStats(observedServices);
-
-        if (observedServices.length === 0)
-          this.enableSemaphore();
-          Ember.run.cancel(timer);
+        const observedServices = this.get('observedServices');
+        return this.pollStats(observedServices);
     }),
     enableSemaphore() {
         return this.set('pollStatsSemaphore', true);
@@ -28,24 +25,25 @@ export default Ember.Service.extend({
     },
     pollStats(observedServices, timeout = 500) {
         return new Ember.RSVP.Promise((resolve, reject) => {
-            return Ember.run.later(this, () => {
-                if (this.get('pollStatsSemaphore')) {
-                    this.disableSemaphore();
-                    this.getDockerStats(observedServices, timeout)
-                        .then(stats => {
-                            this.enableSemaphore();
-                            resolve(stats);
-                        })
-                        .catch(err => {
-                            this.enableSemaphore();
-                            reject(err)
-                        });
-                }
-                else return this.pollStats(observedServices, timeout+500);
-            }, timeout);
+          return Ember.run.later(this, () => {
+            if (this.get('pollStatsSemaphore')) {
+              this.disableSemaphore();
+              this.getDockerStats(observedServices, timeout)
+                .then(stats => {
+                  this.enableSemaphore();
+                  resolve(stats);
+                })
+                .catch(err => {
+                  this.enableSemaphore();
+                  reject(err);
+                });
+            }
+            else return this.pollStats(observedServices, timeout+100);
+          }, timeout);
         });
     },
-    getDockerStats(observedServices = [], timeout = 500) {
+    // Fetch docker cpu stats from service.
+    getDockerStats(observedServices = []) {
       return new Ember.RSVP.Promise((resolve, reject) => {
         const pipelines = observedServices.map(serv => serv.pipeline);
         const services = observedServices.map(serv => serv.service);

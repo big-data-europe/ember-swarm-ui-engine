@@ -30,10 +30,6 @@
     {{!-- Toggle advanced mode button  --}}
     <label>
       {{md-check name="Toggle Advanced Mode" checked=isAdvancedMode}}
-      {{!-- {{input type="checkbox"
-        name="checkboxPolicy"
-        checked=isAdvancedMode}}
-        Toggle Advanced Mode --}}
     </label>
 
     {{#if pipeline.actionCount}}
@@ -53,7 +49,11 @@
 
   {{!-- List of containers conforming the pipeline --}}
   <div class="services">
-    <h4>Services</h4>
+    <div>
+      <h4 class="service-header">Services</h4>
+      <h5 class="service-header-sub">Stats</h5>
+    </div>
+
     {{#each pipeline.services as |service|}}
       {{pipeline-service service=service advancedMode=isAdvancedMode isActive=isActive handleDockerStats=(action 'handleDockerStats')}}
     {{/each}}

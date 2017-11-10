@@ -8,7 +8,8 @@ export default Ember.Service.extend({
         let timer = this.pollStats(observedServices);
 
         if (observedServices.length === 0)
-            Ember.run.cancel(timer);
+          this.enableSemaphore();
+          Ember.run.cancel(timer);
     }),
     enableSemaphore() {
         return this.set('pollStatsSemaphore', true);
@@ -40,7 +41,7 @@ export default Ember.Service.extend({
                             reject(err)
                         });
                 }
-                else return this.pollStats(observedServices, timeout+100)
+                else return this.pollStats(observedServices, timeout+500);
             }, timeout);
         });
     },
@@ -59,6 +60,7 @@ export default Ember.Service.extend({
             error: (error => reject(error))
           });
         }
+        else return resolve(null);
       });
     }
 });

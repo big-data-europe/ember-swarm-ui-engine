@@ -3,6 +3,7 @@ import Ember from 'ember';
 export default Ember.Component.extend({
   statusUpdateService: Ember.inject.service('status-update'),
   showLogs: false,
+  getServiceStats: false,
   disableServiceActionButtons: false,
   pollService: Ember.inject.service('poll-service'),
   isActiveObserver: Ember.observer('isActive', function(){
@@ -12,6 +13,11 @@ export default Ember.Component.extend({
       const randomTimeout = Math.floor(Math.random() * 5000) + 4000;
       return this.get('pollService').pollService(service, randomTimeout);
     }
+  }).on('init'),
+
+  getServiceStatsObserver: Ember.observer('getServiceStats', 'cpuServiceStats', function() {
+    const getServiceStats = this.get('getServiceStats');
+    return this.send('handleDockerStats', getServiceStats);
   }).on('init'),
 
   // Disable scaling works for controlling scaling and restarting
@@ -34,6 +40,9 @@ export default Ember.Component.extend({
   },
 
   actions: {
+    handleDockerStats(serviceStatsFlag) {
+      return this.sendAction('handleDockerStats', this.get('service.name'), serviceStatsFlag);
+    },
     pipelineServiceUp() {
       return this.updateServiceStatus('up');
     },

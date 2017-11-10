@@ -34,6 +34,7 @@ export default Ember.Component.extend({
   `,
   showDialog: false,
   statusUpdateService: Ember.inject.service('status-update'),
+  cpuStatsService: Ember.inject.service('cpu-stats'),
   pollService: Ember.inject.service('poll-service'),
   isAdvancedMode: false,
   isActiveObserver: Ember.observer('isActive', function(){
@@ -65,8 +66,12 @@ export default Ember.Component.extend({
     return this.get('statusUpdateService').updateStatus(pipeline, status);
   },
 
-
   actions: {
+    handleDockerStats(serviceName, serviceStatsFlag) {
+      const cpuStatsService = this.get('cpuStatsService');
+      const pipelineId = this.get('pipeline.id');
+      return serviceStatsFlag ? cpuStatsService.addService(pipelineId, serviceName) : cpuStatsService.removeService(pipelineId, serviceName);
+    },
     showInfoDialog: function() {
       this.set('showInfoDialog', true);
     },

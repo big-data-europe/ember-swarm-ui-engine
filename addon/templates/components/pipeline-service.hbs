@@ -1,6 +1,6 @@
 <div class="service">
   <div class="row">
-    <div class="col s2">
+    <div class="col s1">
       {{service.name}} / <strong>{{service.status.title}}</strong>
     </div>
 
@@ -49,31 +49,22 @@
       </label>
     </div>
 
+
     {{#if cpuServiceStats}}
-      <strong>% CPU: </strong>
-      <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
+      <div class="col s1 line-input">
+        <strong>% CPU: </strong>
+        <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
 
-      <strong>Mem Usage/Limit: </strong>
-      <span>
-        {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
-        {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
-      </span>
+        <strong>Mem Usage/Limit: </strong>
+        <span>
+          {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
+          {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
+        </span>
+
+        <strong>% Memory: </strong>
+        {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'mem-percentage')}}
+      </div>
     {{/if}}
-
-
-    {{!-- {{#if cpuServiceStats}}
-      {{#tether-dialog
-          target=(concat "#modal-" service.name "-stats")
-          targetAttachment='top right'
-          attachment='top left'
-          hasOverlay=false
-          clickOutsideToClose=true
-          container-class='help-box'}}
-        <span>% CPU: {{round-two-decimals cpuServiceStats.data.attributes.cpu-percentage}}</span>
-        <span>Mem Usage/Limit: {{round-two-decimals (byte-to-megabyte cpuServiceStats.data.attributes.mem-usage)}}/{{round-two-decimals (byte-to-megabyte cpuServiceStats.data.attributes.mem-limit)}} Mb</span>
-        <span>% Memory: {{round-two-decimals cpuServiceStats.data.attributes.mem-percentage}}</span>
-      {{/tether-dialog}}
-    {{/if}} --}}
 
   </div>
 

@@ -33,6 +33,7 @@ export default Ember.Component.extend({
       </ul>
   `,
   showDialog: false,
+  showCharts: false,
   statusUpdateService: Ember.inject.service('status-update'),
   pollService: Ember.inject.service('poll-service'),
   isAdvancedMode: false,
@@ -56,7 +57,7 @@ export default Ember.Component.extend({
           }, 1000);
         }
       });
-    }    
+    }
   }).on('init'),
 
   // Updates the status of the pipeline.
@@ -67,11 +68,22 @@ export default Ember.Component.extend({
 
 
   actions: {
+    handleDockerStats(serviceName, serviceStatsFlag) {
+      const cpuStatsService = this.get('cpuStatsService');
+      const pipelineId = this.get('pipeline.id');
+      return serviceStatsFlag ? cpuStatsService.addService(pipelineId, serviceName) : cpuStatsService.removeService(pipelineId, serviceName);
+    },
+    showChartsDialog: function() {
+      return this.set('showCharts', true);
+    },
+    closeChartsDialog: function() {
+      return this.set('showCharts', false);
+    },
     showInfoDialog: function() {
-      this.set('showInfoDialog', true);
+      return this.set('showInfoDialog', true);
     },
     closeInfoDialog: function() {
-      this.set('showInfoDialog', false);
+      return this.set('showInfoDialog', false);
     },
     swarmUp: function() {
       return this.updateStatus('up');

@@ -57,6 +57,21 @@
     {{#each pipeline.services as |service|}}
       {{pipeline-service service=service advancedMode=isAdvancedMode isActive=isActive}}
     {{/each}}
+
+    {{!-- CREATE MODAL WITH STATS --}}
+    {{md-btn text="general stats" action="showChartsDialog"}}
+
+    {{#if showCharts}}
+      {{#md-modal close=(action 'closeChartsDialog') modalClassNames=modalClassNames}}
+        <div class="modal-content">
+          {{{text}}}
+        </div>
+        <div class="modal-footer">
+          <a class="btn secondary" {{action 'closeChartsDialog'}}> Cancel</a>
+        </div>
+      {{/md-modal}}
+    {{/if}}
+
   </div>
 </div>
 

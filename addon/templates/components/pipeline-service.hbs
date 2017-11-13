@@ -1,7 +1,7 @@
 <div class="service">
   <div class="row">
     <div class="col s1">
-      {{service.name}} / <strong>{{service.status.title}}</strong>
+      {{service.name}} / <br/> <strong>{{service.status.title}}</strong>
     </div>
 
     {{!-- Scaling buttons --}}
@@ -43,28 +43,26 @@
         <div class="btn secondary {{if disableServiceActionButtons 'disabled'}}"><i class="material-icons">bug_report</i></div>
     </div>
 
-    <div class="col s1 line-input">
-      <label>
+    <div class={{statsClasses}}>
         {{md-check id=(concat "modal-" service.name "-stats") checked=getServiceStats}}
-      </label>
+      {{#if cpuServiceStats}}
+        <div class='stats'>
+          <strong>% CPU: </strong>
+          <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
+
+          <strong>Mem Usage/Limit: </strong>
+          <span>
+            {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
+            {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
+          </span>
+
+          <strong>% Memory: </strong>
+          {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'mem-percentage')}}
+        </div>
+      {{/if}}
     </div>
 
 
-    {{#if cpuServiceStats}}
-      <div class="col s1 line-input">
-        <strong>% CPU: </strong>
-        <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
-
-        <strong>Mem Usage/Limit: </strong>
-        <span>
-          {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
-          {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
-        </span>
-
-        <strong>% Memory: </strong>
-        {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'mem-percentage')}}
-      </div>
-    {{/if}}
 
   </div>
 

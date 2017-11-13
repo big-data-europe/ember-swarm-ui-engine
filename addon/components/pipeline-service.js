@@ -39,6 +39,13 @@ export default Ember.Component.extend({
     return this.get('statusUpdateService').updateStatus(service, status);
   },
 
+  statsClasses: Ember.computed('advancedMode', function(){
+    if (this.get('advancedMode') === true){
+      return 'col s3 line-input stats';
+    }
+    return 'col s4 line-input stats';
+  }),
+
   actions: {
     handleDockerStats(serviceStatsFlag) {
       return this.sendAction('handleDockerStats', this.get('service.name'), serviceStatsFlag);

@@ -52,8 +52,8 @@
 
           <strong>Mem Usage/Limit: </strong>
           <span>
-            {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
-            {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
+            {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}} <strong>Mb</strong>/
+            {{round-two-decimals (byte-to-gigabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}} <strong>Gb</strong>
           </span>
 
           <strong>% Memory: </strong>

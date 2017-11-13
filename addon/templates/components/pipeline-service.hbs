@@ -48,16 +48,19 @@
 
   {{#if cpuServiceStats}}
     <div class="row stats">
-      <strong>% CPU: </strong>
-      <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
+      <div class="col s2 push-s2">
+        <strong>% CPU: </strong>
+        {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}
+      </div>
 
-      <strong>Mem Usage/Limit: </strong>
-      <span>
+      <div class="col s3 push-s2">
+        <strong>Mem Usage/Limit: </strong>
           {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}} <strong>MB</strong>/
           {{round-two-decimals (byte-to-gigabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}} <strong>GB</strong>
-        </span>
-
-      <strong>% Memory: </strong> {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'mem-percentage')}}
+      </div>
+      <div class="col s2 push-s2">
+        <strong>% Memory: </strong> {{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'mem-percentage')}}
+      </div>
     </div>
   {{/if}}
   {{!-- Logging information about the container --}}

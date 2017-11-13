@@ -57,7 +57,7 @@ export default Ember.Component.extend({
           }, 1000);
         }
       });
-    }    
+    }
   }).on('init'),
 
   // Updates the status of the pipeline.

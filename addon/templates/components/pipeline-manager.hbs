@@ -55,7 +55,11 @@
     </div>
 
     {{#each pipeline.services as |service|}}
-      {{pipeline-service service=service advancedMode=isAdvancedMode isActive=isActive handleDockerStats=(action 'handleDockerStats')}}
+      {{pipeline-service service=service
+                         advancedMode=isAdvancedMode
+                         isActive=isActive
+                         handleDockerStats=(action 'handleDockerStats')
+                         cpuServiceStats=(get-cpu-stats cpuStatsArray pipeline service)}}
     {{/each}}
   </div>
 </div>

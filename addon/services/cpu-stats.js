@@ -2,17 +2,25 @@ import Ember from 'ember';
 
 export default Ember.Service.extend({
     observedServices: Ember.A(),
-    callQueue: Ember.A(),
+    cpuStatsArray: null,
     isPolling: false,
     requestTimer: undefined,
     observedServicesObserver: Ember.observer('observedServices.[]', function() {
         const observedServices = this.get('observedServices');
+        const requestTimer = this.get('requestTimer');
         if (observedServices.length > 0) {
-          this.set('isPolling', true);
-          this.set('requestTimer', this.loopPoll());
+          if (this.get('isPolling') == false) this.set('isPolling', true);
+          if (this.get('requestTimer') === undefined) this.set('requestTimer', this.loopPoll());
         }
         else {
+          // Cancel the outstanding polling timer.
           Ember.run.cancel(this.get('requestTimer'));
+
+          // Remove the current data from the array, afterRender is to avoid race conditions.
+          Ember.run.scheduleOnce('afterRender', this, function() { this.set('cpuStatsArray', null) }) ;
+
+          // Reset the timer and the polling flags.
+          this.set('requestTimer', undefined);
           this.set('isPolling', false);
         }
     }),
@@ -32,13 +40,16 @@ export default Ember.Service.extend({
         el.pipeline === pipelineId && el.service === serviceName);
       return this.get('observedServices').removeObject(objToRemove);
     },
+    // Polls the service for cpu stats using a random interval
     loopPoll() {
-      const randomTimeout = Math.floor(Math.random() * 5000) + 4000;
+      const randomTimeout = Math.floor(Math.random() * 4000) + 000;
       return Ember.run.later(this, function() {
           return this.getDockerStats(this.get('observedServices'))
                   .then(stats => {
-                    this.set('cpuStatsArray', stats);
-                    if (this.get('isPolling') === true) return this.loopPoll();
+                    if (this.get('isPolling') === true) {
+                      this.set('cpuStatsArray', stats);
+                      return this.loopPoll();
+                    }
                   })
                   .catch(err => this.set('cpuStatsArray', null));
       }, randomTimeout);

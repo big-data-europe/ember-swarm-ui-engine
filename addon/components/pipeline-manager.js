@@ -35,6 +35,7 @@ export default Ember.Component.extend({
   showDialog: false,
   statusUpdateService: Ember.inject.service('status-update'),
   cpuStatsService: Ember.inject.service('cpu-stats'),
+  cpuStatsArray: Ember.computed.oneWay('cpuStatsService.cpuStatsArray'),
   pollService: Ember.inject.service('poll-service'),
   isAdvancedMode: false,
   isActiveObserver: Ember.observer('isActive', function(){

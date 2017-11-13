@@ -15,7 +15,7 @@ export default Ember.Component.extend({
     }
   }).on('init'),
 
-  getServiceStatsObserver: Ember.observer('getServiceStats', 'cpuServiceStats', function() {
+  getServiceStatsObserver: Ember.observer('getServiceStats', function() {
     const getServiceStats = this.get('getServiceStats');
     return this.send('handleDockerStats', getServiceStats);
   }).on('init'),

@@ -50,6 +50,18 @@
     </div>
 
     {{#if cpuServiceStats}}
+      <strong>% CPU: </strong>
+      <span>{{round-two-decimals (get-property (get-head cpuServiceStats.stats) 'cpu-percentage')}}</span>
+
+      <strong>Mem Usage/Limit: </strong>
+      <span>
+        {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-usage'))}}/
+        {{round-two-decimals (byte-to-megabyte (get-property (get-head cpuServiceStats.stats) 'mem-limit'))}}
+      </span>
+    {{/if}}
+
+
+    {{!-- {{#if cpuServiceStats}}
       {{#tether-dialog
           target=(concat "#modal-" service.name "-stats")
           targetAttachment='top right'
@@ -61,7 +73,7 @@
         <span>Mem Usage/Limit: {{round-two-decimals (byte-to-megabyte cpuServiceStats.data.attributes.mem-usage)}}/{{round-two-decimals (byte-to-megabyte cpuServiceStats.data.attributes.mem-limit)}} Mb</span>
         <span>% Memory: {{round-two-decimals cpuServiceStats.data.attributes.mem-percentage}}</span>
       {{/tether-dialog}}
-    {{/if}}
+    {{/if}} --}}
 
   </div>
 

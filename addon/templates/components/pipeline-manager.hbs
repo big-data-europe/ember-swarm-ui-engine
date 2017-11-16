@@ -37,12 +37,12 @@
     {{/if}}
   </div>
   <div class="delete">
-    <div class="btn delete" {{action "confirmDeletion"}} title='delete forever'>
+    <div class="btn delete" {{action "confirmDeletion"}} title='Delete forever'>
       <i class="material-icons">delete_forever</i>
     </div>
   </div>
   {{#if pipeline.stack.location}}
-    <div class="update" title="update from git and repull all images">
+    <div class="update" title="Update from git and repull all images">
       {{md-btn text="update from git" action="updatePipeline" }}
     </div>
   {{/if}}

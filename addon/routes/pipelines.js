@@ -6,7 +6,7 @@ export default Ember.Route.extend({
       refreshModel: true
     }
   },
-  pollService: Ember.inject.service('poll-service'),  
+  pollService: Ember.inject.service('poll-service'),
 
   activate() {
     this.get('pollService').activatePoll();

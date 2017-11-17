@@ -1,6 +1,14 @@
 <div class="item--list">
   {{#md-card-collapsible}}
 
+    {{#if loadingServices}}
+      <div class="progress-bar">
+        <div class="progress">
+          <div class="indeterminate"></div>
+        </div>
+      </div>
+    {{/if}}
+
     {{#each model as |item|}}
         {{list-item-stack item=item launchPipeline=(action launchPipeline) activeItem=activeItem}}
     {{/each}}

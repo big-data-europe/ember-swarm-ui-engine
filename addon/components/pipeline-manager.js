@@ -46,21 +46,7 @@ export default Ember.Component.extend({
       return this.get('pollService').pollPipeline(pipeline, randomTimeout);
     }
   }).on('init'),
-
-  servicesObserver: Ember.observer('isActive', 'pipeline.services', 'pipeline.services.[]', function() {
-    const isActive = this.get('isActive');
-    if (isActive) {
-      this.get('pipeline.services').then((services) => {
-        if (services.length === 0) {
-          Ember.run.later(this, function() {
-            const model = this.get('pipeline').hasMany('services');
-            model.reload();
-          }, 1000);
-        }
-      });
-    }
-  }).on('init'),
-
+  
   // Updates the status of the pipeline.
   updateStatus: function(status) {
     const pipeline = this.get('pipeline');

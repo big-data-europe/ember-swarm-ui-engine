@@ -10,7 +10,14 @@
         <div class="text">
           This stack uses the <span>{{item.dockerFile.title}}</span> docker file from the database.
         </div>
+      {{else}}
+        <div class="progress-bar">
+          <div class="progress">
+            <div class="indeterminate"></div>
+          </div>
+        </div>
       {{/if}}
+
       {{#if item.location}}
 
         <div class="text">

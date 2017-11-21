@@ -27,7 +27,7 @@ export default Ember.Component.extend({
             else return resolve(true);
           })
           .catch(err => reject(err));
-      }
+      };
 
       return internalPoll(pipeline, count);
     });
@@ -54,7 +54,7 @@ export default Ember.Component.extend({
           })
           .catch(err => {
             this.set('loadingServices', false);
-            throw new Error(err)
+            throw new Error(err);
           });
       });
     });

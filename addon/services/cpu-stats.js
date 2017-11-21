@@ -17,7 +17,7 @@ export default Ember.Service.extend({
           Ember.run.cancel(this.get('requestTimer'));
 
           // Remove the current data from the array, afterRender is to avoid race conditions.
-          Ember.run.scheduleOnce('afterRender', this, function() { this.set('cpuStatsArray', null) }) ;
+          Ember.run.scheduleOnce('afterRender', this, function() { this.set('cpuStatsArray', null); });
 
           // Reset the timer and the polling flags.
           this.set('requestTimer', undefined);
@@ -42,7 +42,7 @@ export default Ember.Service.extend({
     },
     // Polls the service for cpu stats using a random interval
     loopPoll() {
-      const randomTimeout = Math.floor(Math.random() * 4000) + 000;
+      const randomTimeout = Math.floor(Math.random() * 4000) + 1000;
       return Ember.run.later(this, function() {
           return this.getDockerStats(this.get('observedServices'))
                   .then(stats => {

@@ -38,7 +38,7 @@
 
     {{!-- Log toggle --}}
     <div class="col s1 log" title="Bug report">
-      <div class="btn secondary {{if disableServiceActionButtons 'disabled'}}"><i class="material-icons">bug_report</i></div>
+      <div class="btn secondary {{if disableServiceActionButtons 'disabled'}}" {{action "toggleLogs"}}><i class="material-icons">bug_report</i></div>
     </div>
 
     <div class="col s1">

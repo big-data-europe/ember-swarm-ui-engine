@@ -32,6 +32,13 @@
       {{md-check name="Toggle Advanced Mode" checked=isAdvancedMode}}
     </label>
 
+    {{#if isAdvancedMode}}
+      {{!-- Toggle force mode --}}
+      <label title="Use the Forced Mode at your own discretion to bypass buttons disabling">
+        {{md-check name="Toggle Forced Mode" checked=isForcedMode}}
+      </label>
+    {{/if}}
+
     {{#if pipeline.actionCount}}
       {{pipeline.actionCount}} actions pending...
     {{/if}}
@@ -56,10 +63,11 @@
 
     {{#each pipeline.services as |service|}}
       {{pipeline-service service=service
-                         advancedMode=isAdvancedMode
-                         isActive=isActive
-                         handleDockerStats=(action 'handleDockerStats')
-                         cpuServiceStats=(get-cpu-stats cpuStatsArray pipeline service)}}
+        advancedMode=isAdvancedMode
+        forcedMode=isForcedMode
+        isActive=isActive
+        handleDockerStats=(action 'handleDockerStats')
+        cpuServiceStats=(get-cpu-stats cpuStatsArray pipeline service)}}
     {{/each}}
   </div>
 </div>

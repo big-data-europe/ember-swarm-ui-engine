@@ -20,24 +20,12 @@ export default Ember.Component.extend({
     return this.send('handleDockerStats', getServiceStats);
   }).on('init'),
 
-  // Disable scaling works for controlling scaling and restarting
-  disableScaling: Ember.observer('service.status', function() {
-    let enableScalingStates = ['started', 'up'];
-    this.get('service.status').then((serviceStatus) => {
-      if (serviceStatus === null || enableScalingStates.indexOf(serviceStatus.get('title')) === -1) {
-        return this.set('disableServiceActionButtons', true);
-      }
-      else {
-        return this.set('disableServiceActionButtons', false);
-      }
-    });
-  }).on('init'),
-
   // Updates the status of the pipeline service.
   updateServiceStatus: function(status) {
     const service = this.get('service');
     return this.get('statusUpdateService').updateStatus(service, status);
   },
+
   updateScaling: function() {
     let service = this.get('service');
     if(!service){ return;}
@@ -50,6 +38,44 @@ export default Ember.Component.extend({
       return service;
     });
   },
+
+  // Disable scaling works for controlling scaling and restarting
+  disableScaleAndRestartObserver: Ember.observer('service.status', 'forcedMode', function() {
+    if(this.get('forcedMode')) {
+      return this.set('disableServiceActionButtons', false);
+    }
+    let enableScalingStates = ['started', 'up'];
+    this.get('service.status').then((serviceStatus) => {
+      if (serviceStatus === null || enableScalingStates.indexOf(serviceStatus.get('title')) === -1) {
+        return this.set('disableServiceActionButtons', true);
+      }
+      else {
+        return this.set('disableServiceActionButtons', false);
+      }
+    });
+  }).on('init'),
+
+  // Disable (or not) the up / start / stop buttons depending on the status of the service and whether we are in "forced" mode
+  disabledButtonsObserver: Ember.observer('service.status', 'forcedMode', function() {
+    const _this = this;
+    return this.get('service.status').then(status => {
+      if(_this.get('forcedMode')) {
+        return _this.set('disabledButtons', {
+          up: false,
+          start: false,
+          stop: false
+        });
+      }
+      if(!status || !status.get('title')) {return {};}
+      return _this.set('disabledButtons', {
+        "up": ["up", "starting", "started"].contains(status.get('title')),
+        "start": ["up", "starting", "started"].contains(status.get('title')),
+        "stop": !["up", "starting", "started"].contains(status.get('title'))
+      });
+    });
+  }).on('init'),
+
+  disabledButtons: {},
 
   actions: {
     handleDockerStats(serviceStatsFlag) {

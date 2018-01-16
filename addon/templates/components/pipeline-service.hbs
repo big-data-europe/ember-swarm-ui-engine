@@ -13,18 +13,18 @@
     {{!-- Up button --}}
     {{#if advancedMode}}
       <div class="col s1">
-        {{md-btn class="btn secondary" action='pipelineServiceUp' isDisabled=(or (eq (await service.status.title) 'started') (eq (await service.status.title) 'starting') (eq (await service.status.title) 'up')) text="up"}}
+        {{md-btn class="btn secondary" action='pipelineServiceUp' isDisabled=disabledButtons.up text="up"}}
       </div>
     {{/if}}
 
     {{!-- Start button --}}
     <div class="col s1 addMargin">
-      {{md-btn class="btn secondary" action='pipelineServiceStart' isDisabled=(or (eq (await service.status.title) 'started') (eq (await service.status.title) 'starting') (eq (await service.status.title) 'up')) text="start"}}
+      {{md-btn class="btn secondary" action='pipelineServiceStart' isDisabled=disabledButtons.start text="start"}}
     </div>
 
     {{!-- Stop button --}}
     <div class="col s1 addMargin">
-      {{md-btn class="btn secondary" action='pipelineServiceStop' isDisabled=(and (not-eq (await service.status.title) 'started') (not-eq (await service.status.title) 'starting') (not-eq (await service.status.title) 'up')) text="stop"}}
+      {{md-btn class="btn secondary" action='pipelineServiceStop' isDisabled=disabledButtons.stop text="stop"}}
     </div>
 
     {{!-- Restart button --}}

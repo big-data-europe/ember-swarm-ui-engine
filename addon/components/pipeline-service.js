@@ -38,6 +38,18 @@ export default Ember.Component.extend({
     const service = this.get('service');
     return this.get('statusUpdateService').updateStatus(service, status);
   },
+  updateScaling: function() {
+    let service = this.get('service');
+    if(!service){ return;}
+    let scaling = service.get('scaling');
+    if(!scaling) {return;}
+    console.debug("Updating scaling for service: "+service.get('name'));
+    service.set('scalingRequested', scaling);
+    return service.save().then(service => {
+      service.set('scalingRequested', null);
+      return service;
+    });
+  },
 
   actions: {
     handleDockerStats(serviceStatsFlag) {
@@ -64,7 +76,7 @@ export default Ember.Component.extend({
         let scaling = service.get('scaling');
         if (scaling > 0) {
           service.set('scaling', scaling - 1);
-          service.save();
+          Ember.run.debounce(this, "updateScaling", 4000);
         }
       }
     },
@@ -73,7 +85,7 @@ export default Ember.Component.extend({
         let service = this.get('service');
         let scaling = service.get('scaling');
         service.set('scaling', scaling + 1);
-        service.save();
+        Ember.run.debounce(this, "updateScaling", 4000);
       }
     },
     toggleLogs: function() {

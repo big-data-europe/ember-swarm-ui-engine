@@ -30,7 +30,7 @@ export default Ember.Component.extend({
     let service = this.get('service');
     if(!service){ return;}
     let scaling = service.get('scaling');
-    if(!scaling) {return;}
+    if(!scaling) {scaling = 0;}
     console.debug("Updating scaling for service: "+service.get('name'));
     service.set('scalingRequested', scaling);
     return service.save().then(service => {
@@ -102,8 +102,12 @@ export default Ember.Component.extend({
         let scaling = service.get('scaling');
         if (scaling > 0) {
           service.set('scaling', scaling - 1);
-          Ember.run.debounce(this, "updateScaling", 4000);
         }
+        else {
+          service.set('scaling', 0);
+        }
+        Ember.run.debounce(this, "updateScaling", 4000);
+
       }
     },
     increaseServiceScaling: function() {
